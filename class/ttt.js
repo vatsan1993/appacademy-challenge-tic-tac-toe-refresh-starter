@@ -18,8 +18,14 @@ class TTT {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', TTT.testCommand);
-
+    // Screen.addCommand('t', 'test command (remove)', TTT.testCommand);
+    Screen.addCommand('u', 'Move Up', this.cursor.up);
+    Screen.addCommand('d', 'Move down', this.cursor.down);
+    Screen.addCommand('l', 'Move left', this.cursor.left);
+    Screen.addCommand('r', 'Move right', this.cursor.right);
+    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
+    // this.cursor.resetBackgroundColor();
+    // this.cursor.setBackgroundColor();
     Screen.render();
   }
 
