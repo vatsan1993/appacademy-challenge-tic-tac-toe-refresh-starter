@@ -31,7 +31,6 @@ class Cursor {
     // Move cursor down
     if (this.row + 1 < this.numRows) {
       this.row += 1;
-      this.setBackgroundColor();
     }
   }
 

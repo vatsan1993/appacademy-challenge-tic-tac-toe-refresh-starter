@@ -19,16 +19,60 @@ class TTT {
 
     // Replace this with real commands
     // Screen.addCommand('t', 'test command (remove)', TTT.testCommand);
-    Screen.addCommand('u', 'Move Up', this.cursor.up);
-    Screen.addCommand('d', 'Move down', this.cursor.down);
-    Screen.addCommand('l', 'Move left', this.cursor.left);
-    Screen.addCommand('r', 'Move right', this.cursor.right);
-    Screen.setGrid(this.cursor.row, this.cursor.col, this.playerTurn);
-    // this.cursor.resetBackgroundColor();
-    // this.cursor.setBackgroundColor();
+    Screen.addCommand('u', 'Move Up', this.up.bind(this));
+    Screen.addCommand('d', 'Move down', this.down.bind(this));
+    Screen.addCommand('l', 'Move left', this.left.bind(this));
+    Screen.addCommand('r', 'Move right', this.right.bind(this));
+    Screen.addCommand('p', 'Place Marker', this.placeMove.bind(this));
     Screen.render();
   }
 
+  placeMove() {
+    let cursor = this.cursor;
+    let row = cursor.row;
+    let col = cursor.col;
+    if (this.grid[row][col] === ' ') {
+      this.grid[row][col] = this.playerTurn;
+      Screen.setGrid(row, col, this.playerTurn);
+      let winner = TTT.checkWin(this.grid);
+      if (winner) {
+        TTT.endGame(winner);
+      }
+      this.playerTurn = this.playerTurn == 'X' ? 'O' : 'X';
+    } else {
+      Screen.setMessage('Unable to place the marker');
+    }
+    Screen.render();
+  }
+
+  up() {
+    let cursor = this.cursor;
+    cursor.resetBackgroundColor();
+    cursor.up();
+    cursor.setBackgroundColor();
+    Screen.render();
+  }
+  right() {
+    let cursor = this.cursor;
+    cursor.resetBackgroundColor();
+    cursor.right();
+    cursor.setBackgroundColor();
+    Screen.render();
+  }
+  down() {
+    let cursor = this.cursor;
+    cursor.resetBackgroundColor();
+    cursor.down();
+    cursor.setBackgroundColor();
+    Screen.render();
+  }
+  left() {
+    let cursor = this.cursor;
+    cursor.resetBackgroundColor();
+    cursor.left();
+    cursor.setBackgroundColor();
+    Screen.render();
+  }
   // Remove this
   static testCommand() {
     console.log('TEST COMMAND');
@@ -45,6 +89,7 @@ class TTT {
         }
       }
       if (valInRow.length === 1 && valInRow[0] !== ' ') {
+        console.log(valInDiag);
         return valInRow[0];
       }
     }
@@ -58,6 +103,7 @@ class TTT {
         }
       }
       if (valInCol.length === 1 && valInCol[0] !== ' ') {
+        console.log(valInCol);
         return valInCol[0];
       }
     }
@@ -70,6 +116,7 @@ class TTT {
       }
     }
     if (valInDiag.length === 1 && valInDiag[0] !== ' ') {
+      console.log(valInDiag);
       return valInDiag[0];
     }
     // diag 2
@@ -81,6 +128,7 @@ class TTT {
       }
     }
     if (valInDiag.length === 1 && valInDiag[0] !== ' ') {
+      console.log(valInDiag);
       return valInDiag[0];
     }
 
